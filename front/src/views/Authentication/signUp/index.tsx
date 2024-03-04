@@ -3,7 +3,7 @@ import InputBox from '../../../components/inputBox';
 import "./style.css";
 import { useNavigate } from 'react-router-dom';
 import { CheckCertificationRequestDto, EmailCertificationRequestDto, IdCheckRequestDto, SignUpRequestDto } from '../../../api/request/auth';
-import { checkCertificationRequest, emailCertificationRequest, idCheckRequest, signUpRequest } from '../../../api';
+import { SNS_SIGN_IN_URL, checkCertificationRequest, emailCertificationRequest, idCheckRequest, signUpRequest } from '../../../api';
 import { CheckCertificationResponseDto, IdCheckResponseDto, SignUpResponseDto } from '../../../api/response/auth';
 
 import { ResponseCode } from '../../../types/enums';
@@ -172,6 +172,7 @@ export default function SignUp() {
       alert('중복 확인은 필수 입니다.');
       return;
     }
+    
     const checkedPassword = passwordPattern.test(password);
     if (!checkedPassword) {
       setPasswordError(true);
@@ -193,6 +194,10 @@ export default function SignUp() {
   const onSignInButtonClickHandler = () => {
     navigate('/auth/sign-in');
   }
+  const onSnsSignInButtonClickHandler = (type: 'kakao' | 'naver') => {
+    window.location.href = SNS_SIGN_IN_URL(type);
+  }
+  
   const onIdKeyDownHandler = (event:KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') return;
     onIdButtonClickHandler();
@@ -226,8 +231,8 @@ export default function SignUp() {
             <div className={'sign-up-content-sns-sign-in-box'}>
               <div className={'sign-up-content-sns-sign-in-title'}>{'Sns login'}</div>
               <div className={'sign-up-content-sns-sign-in-button-box'}>
-                <div className={'kakao-sign-in-button'}></div>
-                <div className={'naver-sign-in-button'}></div>
+                <div className={'kakao-sign-in-button'} onClick={()=>onSnsSignInButtonClickHandler('kakao')}></div>
+                <div className={'naver-sign-in-button'}onClick={()=>onSnsSignInButtonClickHandler('naver')}></div>
               </div>
             </div>
             <div className={'sign-up-content-divider'}></div>

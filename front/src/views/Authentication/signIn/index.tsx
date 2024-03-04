@@ -3,7 +3,7 @@ import InputBox from '../../../components/inputBox';
 import "./style.css";
 import { useNavigate } from 'react-router-dom';
 import { SignInRequsestDto } from '../../../api/request/auth';
-import { signInRequest } from '../../../api';
+import { SNS_SIGN_IN_URL, signInRequest } from '../../../api';
 import { ResponseBody } from '../../../types';
 import { SignInResponseDto } from '../../../api/response/auth';
 import { ResponseCode } from '../../../types/enums';
@@ -63,6 +63,11 @@ export default function SignIn() {
     signInRequest(requestBody).then(sigInResponse);
 
   }
+
+  // sns 처리
+  const onSnsSignInButtonClickHandler = (type: 'kakao' | 'naver' | 'google') => {
+    window.location.href = SNS_SIGN_IN_URL(type);
+  }
   const onIdKeyDownHandler = (event:KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') return;
     if (!passwordRef.current) return;
@@ -94,8 +99,9 @@ export default function SignIn() {
             <div className={'sign-in-content-sns-sign-in-box'}>
               <div className={'sign-in-content-sns-sign-in-title'}>{'SNS 로그인'}</div>
               <div className={'sign-in-content-sns-sign-in-button-box'}>
-                <div className={'kakao-sign-in-button'}></div>
-                <div className={'naver-sign-in-button'}></div>
+                <div className={'kakao-sign-in-button'} onClick={()=>onSnsSignInButtonClickHandler('kakao')}></div>
+                <div className={'naver-sign-in-button'}onClick={()=>onSnsSignInButtonClickHandler('naver')}></div>
+                <div className={'google-sign-in-button'}onClick={()=>onSnsSignInButtonClickHandler('google')}></div>
               </div>
             </div>
             <div className={'sign-in-content-divider'}></div>
