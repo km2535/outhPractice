@@ -1,6 +1,5 @@
 package com.panda.back.entity;
 
-import com.panda.back.dto.request.auth.SignInRequestDto;
 import com.panda.back.dto.request.auth.SignUpRequestDto;
 
 import jakarta.persistence.Entity;
@@ -28,6 +27,14 @@ public class UserEntity {
     this.userId = dto.getId();
     this.password = dto.getPassword();
     this.email = dto.getEmail();
+    this.type = "app";
+    this.role = "ROLE_USER";
+  }
+
+  public UserEntity(String userId, String email, String type) {
+    this.userId = userId;
+    this.password = "Password";
+    this.email = email;
     this.type = "app";
     this.role = "ROLE_USER";
   }
